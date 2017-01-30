@@ -8,7 +8,7 @@
 DYNDNS_SECRETS=/opt/var/dyndns_secrets                                                                                                                 
                                                                                                                                                        
 ### SETTINGS SECTION ###                                                                                                                               
-UPDATE_INTERVAL=1 #300                                                                                                                                 
+UPDATE_INTERVAL=300                                                                                                                                 
 source "${DYNDNS_SECRETS}"  
 DDNS_URL="https://$DDNS_USERNAME:$DDNS_PASSWORD@domains.google.com/nic/update?hostname=$DDNS_HOSTNAME.$DDNS_DOMAIN"
 
