@@ -6,15 +6,7 @@ import urllib.error
 
 BREAK_TIME_SEC=60
 
-while True:
-    try:
-        ip = urllib.request.urlopen('https://icanhazip.com').read().decode()
-        print('IP: {ip}'.format(ip=ip))
-    except urllib.error.HTTPError as e:
-        print('Failed retrieve external ip: {error}'.format(error=e.msg))
-        time.sleep(BREAK_TIME_SEC)
-        continue
-
+def ExecuteUpdate():
     for target in secrets.domains:
         url = 'https://domains.google.com/nic/update?hostname={hostname}&myip={ip}'.format(**target, ip=ip)
         request = urllib.request.Request(url)
@@ -31,3 +23,17 @@ while True:
             print('Failed to update dns for {hostname}: {error}'.format(**target, error=e.msg))
     time.sleep(BREAK_TIME_SEC)
     sys.stdout.flush()
+
+while True:
+    try:
+        ip = urllib.request.urlopen('https://icanhazip.com').read().decode()
+        print('IP: {ip}'.format(ip=ip))
+    except urllib.error.HTTPError as e:
+        print('Failed retrieve external ip: {error}'.format(error=e.msg))
+        time.sleep(BREAK_TIME_SEC)
+        continue
+
+    try:
+        ExecuteUpdate()
+    except:
+        print('Error during ip update, trying again shortly...')
